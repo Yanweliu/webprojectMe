@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OpacityCarousel(透明轮播图)</title>
+    <!-- 写在前面 -->
+    <!-- 相比于仿网易云3D切换图片，少了点击图片切换，按钮切换，只需小横线切换即可，遍历li元素，当前li设置可见，其余不display：none -->
+    <!-- 另外还要学习css3动画@keyframes规则 -->
+    <!-- display:none和visible:hidden都能把网页上某个元素隐藏起来，但两者有区别:
+
+    display:none ---不为被隐藏的对象保留其物理空间，即该对象在页面上彻底消失，通俗来说就是看不见也摸不到。
+
+    visible:hidden--- 使对象在网页上不可见，但该对象在网页上所占的空间没有改变，通俗来说就是看不见但摸得到。 -->
+    <style>
+        *{
+            margin: 0 ;padding: 0;
+        }
+        #ads{
+            width: 750px;
+            height: 330px;
+            margin: 40px auto;
+            border: solid rgb(118, 186, 212) 3px;
+            position: relative;
+        }
+        #ads img{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top:0;left:0;
+            opacity: 0;
+            animation-duration: 0.5s;
+            animation-timing-function:linear;
+            animation-fill-mode: forwards;
+        }
+        @keyframes show{
+            from{opacity:0;}
+            to{Opacity:1;}
+        }
+        @keyframes disappear{
+            from{opacity: 1;}
+            to{opacity: 0;}
+        }
+        #ads img.unshow{animation-name: disappear}
+        #ads img.show{animation-name: show }
+
+        /* 不知道为啥vscode中UNshow的animation-name显示为白色，可能命名不对？ */
+        #ads ul{
+            list-style: none;
+            position: absolute;
+            bottom:20px;
+            /* width:400px;
+            left:50%;      用这样的方法使ul居中不行,太他妈难弄了
+            margin-left:-200px;  */
+            left: 284px;
+        }
+        ul li{
+            /* margin-left: 20px;
+            margin-right:20px; */
+            width: 15px;
+            height: 15px;
+            float: left;
+            margin-right:20px;
+            background: skyblue;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+       li.active{
+           background: rebeccapurple;
+       }
+    </style>
+<!-- 开始考虑功能 1.进入停止，出去自动切换
+    2.点击远点切换图片，先为所有圆点设置没有class，图片unshow，再给传入的图片的li设置show，覆盖一下-->
+    <!-- 注意。onmouseover 是JavaScript属性 onmouseover = function（）{}  window.onload = function(){} 加载完，后一个onload覆盖前一个onload
+               mouseover  是jQuery时间 $('li').mouseover(function(){})   $("document").onready(function(){})  页面只需加载dom树即可-->
+    <!-- <script type="text/javascript" src = "jquery\jQuery-1.8.3.js"></script> -->
+   <script>
+        window.onload = function(){
+        var ads = document.getElementById('ads');
+        var imgs = document.getElementsByTagName('img');
+        var lits = document.getElementsByTagName('li');
+       // var timer=null;
+        var  cur= 0;
+
+        timer = setInterval(auto,2000);  //js中setinterval只需加函数名即可，不带括号和‘’
+        
+
+       ads.onmouseout = function(){
+            timer = setInterval(auto,2000)
+        }
+        ads.onmouseover = function(){
+           clearInterval(timer);
+        }
+
+        
+        // 点击远点切换图片，onclick调用nexpic(),要为每一个li元素遍历添加onclick
+       for(var i = 0;i<lits.length;i++){
+          (function(j){
+               lits[j].onclick = function(){
+                   Changepic(j);
+                    cur = j;
+                    // cur++;
+               }
+           })(i);//这一段相当于function（i），直接把整体当做了一个构造函数
+       }
+       function auto(){
+           cur++;
+           if(cur>=lits.length){cur = 0}
+           Changepic(cur);
+        }
+
+        function Changepic(curIndex){
+            for(var i=0;i<lits.length;i++){
+                lits[i].className = "";
+                imgs[i].className = "unshow";
+            }
+            lits[curIndex].className  = "active";
+            imgs[curIndex].className = "show";
+        }
+
+    }
+
+
+
+
+//下面代码为错误代码不好实施，
+
+    //     $(document).ready(function(){
+    //     var ads = document.getElementById('ads');
+    //     var imgs = document.getElementsByTagName('img');
+    //     var lits = document.getElementsByTagName('li');
+    //     var timer=null;
+    //     var  cur= 0;
+
+
+    //     var ads = $("ads");
+    //     timer = setInterval(auto,1000);  
+
+        
+    //     // ads.onmouseout = function(){
+    //     //     timer  = setInterval(auto,1000);
+    //     // }
+    //    $("ads").mouseout(function(){
+    //         timer = setInterval(function(){(auto,1000)})
+    //     });
+    //     $('ads').onmouseover (function(){
+    //        clearInterval(timer);
+    //     });
+
+    //     function auto(){
+    //        cur++;
+    //        if(cur>=lits.length){cur = 0}
+    //        nexpic(cur);
+    //     }
+
+    //     function nexpic(curIndex){
+    //         for(var i=0;i<lits.length;i++){
+    //             lits[i].className = "";
+    //             imgs[i].className = "unshow";
+    //         }
+    //         lits[curIndex].className  = "active";
+    //         imgs[curIndex].className = "show";
+    //     }
+
+    //     })
+
+    </script>
+</head>
+
+<body>
+    <div id = "ads">
+        <img src="img/Opacity1.jpg" class="show">
+        <img src="img/Opacity2.jpg">
+        <img src="img/Opacity3.jpg">
+        <img src="img/Opacity4.jpg">
+        <img src="img/Opacity5.jpg">
+        <img src="img/Opacity6.jpg">
+        <ul>
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+</body>
+</html>

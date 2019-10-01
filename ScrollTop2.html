@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ScrollTop2(一键返回顶部)</title>
+    <style>
+        a{text-decoration: none;}
+        #btn{width: 40px;height: 40px;position: fixed;text-align: center;
+        background: grey;line-height:40px;bottom: 30px;right:30px;color: skyblue;}
+        #btn:hover{background: snow;color: skyblue;display: none;}
+    </style>
+    <script>
+        window.onload = function(){
+            var nav = document.getElementById("nav");
+            var clientHeight  =document.documentElement.clientHeight;
+            var timer  = null;
+            var flag = true;
+
+            // 开始定义侧边条滑动事件以及触发的函数
+            window.onscroll = function(){
+                var scrolltop = document.documentElement.scrollTop;
+                btn.style.display = scrolltop >= clientHeight? "block":"none";
+            // 这一步是在侧滑条上移时，点击阻止上华，紧接着要直接把flag变成false，
+            //直接阻止接着定时器定时又设置为true,必须要定义在onscroll事件上。其他处无效
+                if(!flag ){
+                clearInterval(timer);
+                }
+            flag = false;
+            }
+
+            btn.onclick = function(){
+                timer = setInterval(function(){
+                    var scrollTop = document.documentElement.scrollTop;
+                    var limit = Math.floor(-scrollTop/6);
+                    document.documentElement.scrollTop = scrollTop + limit;
+                    flag = true;
+                    if(scrollTop ==0){
+                        clearInterval(timer);
+                    }
+                },50);
+            }
+
+
+           
+        }
+    </script>
+</head>
+
+<body style="height: 2000px;">
+    <a href="javascript:void(0);" id="btn" title="回到顶部">top</a>
+</body>
+</html>

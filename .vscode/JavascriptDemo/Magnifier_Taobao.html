@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Magnifier(仿淘宝放大镜效果)</title>
+    <style>
+        *{margin: 0 ;padding: 0;}
+        #normal{height: 500px;width: 600px;position: relative; border: skyblue 2px;top: 10px;overflow: hidden;}
+        #normal>img{height: 100%;width: 100%;}
+        #small{background: slategrey ;opacity: 0.8;position: absolute;top: 0;left: 0;display: none;cursor: move;}
+        #BigImg{height: 500px;width: 500px;position: absolute;left: 600px;top:10px;overflow: hidden;display: none;
+        margin-left: 20px;}
+
+        #BigImg>img{position: absolute;display: block;}
+    </style>
+
+   
+</head>
+
+
+<body>
+    <div id="normal" >
+        <img src="img/MagnifilerTb.jpeg"  alt="">
+        <span id="small"></span>
+    </div>
+
+    <div id="BigImg" >
+        <img src="img/MagnifilerTb.jpeg" alt="">
+    </div>
+
+
+<!-- 关键思路
+ 1. mouseover进入弹窗，display设置由none设置为block。mousemove取值设置为小放大镜的宽高，直接用offsetwidth除以一个比例，即可得到
+    鼠标随着移动而移动，用onmousemove方法onmousemove = function(ev){}直接绑定在鼠标，将鼠标居中，用的clientX和offsetwidth以及offsetleft的组合
+ 2.最重要的一点，把放大镜和放大的图片绑定在一起，用到xy,xy关联着offsetleft，offsettop，图片放大了scale，对应的距离也同样放大scale，设置成left和top -->
+
+    <script>
+            window.onload = function(){
+                var normal = document.getElementById('normal');
+                var small = document.getElementById('small');
+                var bigimg = document.getElementById('BigImg');
+                var img = bigimg.getElementsByTagName('img')[0];
+            
+    
+            normal.onmouseover = function(){
+                small.style.display  = "block";
+                bigimg.style.display = "block";
+            }
+            normal.onmouseout = function(){
+                small.style.display = "none";
+                bigimg.style.display = "none";
+            }
+    
+    
+    
+            normal.onmousemove = function(ev){
+                var ev = ev || event;//姑且认为是光标吧
+                 var scale = 5;
+    
+    
+               // 1.所有的行为都是onmouseove获得small的height width
+                 small.style.width = parseInt(normal.offsetWidth/scale) + "px";
+                 small.style.height = parseInt(normal.offsetHeight/scale) + "px";
+    
+                //2.  鼠标在small正中
+                var x = ev.clientX-normal.offsetLeft-small.offsetWidth/2;
+                var y = ev.clientY-normal.offsetTop - small.offsetHeight/2;
+    
+                //3.  设置small位置随着，xy改变
+                small.style.top = y+"px";
+                small.style.left = x+"px";
+
+                // 4.设置放大图片的尺寸
+
+                img.style.width  = normal.offsetWidth * scale +"px";
+                img.style.height = normal.offsetHeight * scale +"px";
+
+                //5.设置small超出normal后的效果,x是鼠标中心位置
+                if(x<0){x = 0;}
+                if(x >= normal.offsetWidth - small.offsetWidth){x = normal.offsetWidth - small.offsetWidth;}
+                if(y<0){y = 0;}
+                if(y >= normal.offsetHeight - small.offsetHeight){y = normal.offsetHeight - small.offsetHeight;}
+
+
+                //只是单纯的给big设置高宽，只是安布局来死排布，不会动，要把small 关联到big上
+                var left = small.offsetLeft *scale;
+                var top =  small.offsetTop*scale;
+                img.style.left = -left + "px";
+                img.style.top = -top + "px";
+    
+            }
+        }  
+        </script>
+</body>
+</html>

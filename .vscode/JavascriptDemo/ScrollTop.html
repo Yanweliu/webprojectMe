@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ScrollMenu(置顶菜单)</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        #nav{width: 100%;height: 50px;background: gainsboro;}
+        header{width: 100%;text-align: center;height: 160px;line-height: 160px;}
+        #cloths{width: 100%;text-align: center;height: 460px;line-height: 260px;}
+        #shoes{width: 100%;text-align: center;height: 460px;line-height: 260px;}
+        #toys{width: 100%;text-align: center;height: 460px;line-height: 260px;}
+        ul{width: 570px;height:40px;display: block;margin: 0 auto;}
+        ul li{list-style: none;float: left;position: relative;}
+        ul li a{text-decoration: none;font-size: 20px;line-height: 50px;
+        color: rgb(59, 58, 56);margin: 0 20px;display: inline-block;}
+        li:hover{background: rgb(136, 133, 133);}
+        .fixed{position: fixed;top: 0;left: 0px;animation-name: show;animation-duration: 0.5s;}
+        /* fixed的意思就是不随着页面滑动而滑动 */
+        @keyframes show{
+            from{top: -50px;}
+            to{top: 0px;}
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var nav = document.getElementById('nav');
+            var shoes = document.getElementById('shoes');
+            scrollMenu(nav,shoes);
+        }
+//onscroll 事件在元素滚动条在滚动时触发。scrollTop是计算滚动条的垂直位置，
+// document.documentElement.scrollTop||document.body.scrollTop是兼容写法
+        function scrollMenu(obj,target){
+            window.onscroll = function(){
+                var scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+                var targettop =    target.offsetTop;
+                if(scrolltop > targettop){obj.className = "fixed";}
+                else{obj.className = "";}
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <header><h1>header</h1></header>
+    <div id ="nav">
+        <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">怒装</a></li>
+            <li><a href="#">秒杀</a></li>
+            <li><a href="#">飞升</a></li>
+            <li><a href="#">大龙</a></li>
+            <li><a href="#">R闪</a></li>
+            <li><a href="#">装备</a></li>
+        </ul>
+    </div>
+    <div id="cloths"><h1>cloths</h1></div>
+    <div id="shoes"><h1>shoes</h1></div>
+    <div id="toys"><h1>toys</h1></div>
+</body>
+</html>

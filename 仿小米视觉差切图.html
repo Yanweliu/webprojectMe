@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>仿小米视觉差切图</title>
+    <style>
+        *{
+            margin: 0 ;
+            padding: 0;
+        }
+        #content{
+            width: 862px;
+            height:515px ;
+            border: 2px;
+            /* top: 0; */
+            margin: 20px auto;
+            position: relative;
+            border: solid rgb(113, 44, 158) 1px;
+        }
+        .top{
+            width: 50%;
+            position: absolute;
+            left: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .bar{
+            position: absolute;
+            height: 100%;
+            width: 20px;
+            left: 50%;
+            z-index: 2;
+            top: 0;
+            background: rgb(39, 116, 189)
+        }
+      
+    </style>
+
+
+<!-- 实现功能在img框内，被遮盖的图片会随着鼠标的移动而改变宽度，已经设置好了一个图片遮盖另一个图片
+且头一个图片的width50%，实现效果只需用当前client内鼠标x轴坐标减去触发事件的元素最左边x坐标，
+x<0,还未移动内，x>0,移动内，直至移出，回复 -->
+<script type="text/javascript" src="jquery\jQuery-1.8.3.js"></script>
+
+
+<script>
+    window.onload = function(){
+
+    /*getElementsByClassName返回的是一个数组，要指定下标的，
+    例如：var bun=document.getElementsByClassName('xxx');  bun[0];\
+         getElementById() 方法可返回对拥有指定 ID 的第一个对象的引用。
+         用getElementBytagName("")[0]等也可以,byclass返回的是数组
+         另外offsetwidth包含margin和border边框，并且返回的是number，需另外拼接px*/
+    var content = document.getElementById('content');
+    var top = content.getElementsByClassName('top')[0];
+    var bar = content.getElementsByClassName('bar')[0];
+    var buttom = content.getElementsByClassName('buttom')[0];
+  
+
+/*1、onmouseover、onmouseout：鼠标经过时自身触发事件，经过其子元素时也触发该事件；（父亲有的东西，儿子也有） 
+  2、onmouseenter、onmouseleave：鼠标经过时自身触发事件，经过其子元素时不触发该事件。（父亲的东西就是父亲的，不归儿子所有） 
+  这四个事件两两配对使用，onmouseover、onmouseout一对，onmouseenter、onmouseleave一对，不能混合使用。
+  over （在上面）只触发一次
+  move （移动） 只要移动就不停触发
+*/
+console.log(content.offsetwidth);
+
+console.log(bar.offsetwidth);
+
+    content.onmousemove=function(e){
+        var e = e||event;
+
+        var left = e.clientX - this.offsetLeft;//offsetleft是content包括border在内的左边框  
+        if(left<0){
+            left = 0;
+        }//妈的最操蛋的一点，这里是省略了left>=0的情况了，因为不作操作，left仍是e.clientX - this.offsetLeft
+        // else{
+        //     left = e.clientX-this.offsetLeft;这种方法可以，不过鼠标移出content后，left仍显示，bar就直接出来了
+        // }
+        else if(left>=this.offsetwidth-bar.offsetwidth){
+        //这一步就是给bar设置边界，不让bar出来
+            left = this.offsetwidth-bar.offsetwidth;
+        }
+
+        bar.style.left = left + "px";
+        bar.style.transition = "";
+        top.style.width = left + "px";
+        top.style.transition = "";
+    }
+
+    content.onmouseout=function(){
+        bar.style.left = "50%";
+        bar.style.transition = "1s";
+        top.style.width = "50%";
+        top.style.transition = "1s";
+    }
+    }   
+</script>
+
+</head>
+
+<body>
+    <div id="content">
+        <div class="top">
+            <img src="img/mi1.jpg"/>
+        </div>
+        <div class="buttom">
+            <img src="img/mi2.jpg"/>
+        </div>
+
+        <div class="bar"></div>
+
+    </div>
+</body>
+</html>

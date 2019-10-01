@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CssClock(时钟)</title>
+    <style id="addcss">
+        #box{height: 200px;width: 200px;margin: 100px auto;border-radius: 50%;
+             position: relative;border: aquamarine solid 1px;}
+        #lists{height: 100%;margin: 0;padding: 0;list-style: none;position: none;} 
+        #lists li{width: 1px;height: 6px;background: black;position: absolute;top: 0;left: 99px;
+                  transform-origin: 0px 100px;}  
+        #lists li:nth-child(5n+1) {width: 2px; height: 10px;}  
+        #cen,#hour,#sec,#min{position: absolute;background: #000;}   
+        #cen{width: 10px;height: 10px;border-radius: 50%;top: 95px;left: 95px;}  
+        #hour{width: 4px;height: 50px;left: 98px;top: 50px;transform-origin: bottom;} 
+        #min{width: 2px;height: 60px;left: 99px;top: 40px;transform-origin: bottom;}
+        #sec{width: 2px;height: 80px;left: 99px;top:20px;transform-origin: bottom;background: skyblue;}
+    </style>
+    <script>
+        window.onload = function(){
+            var lists  = document.getElementById('lists');
+            var hour   = document.getElementById('hour');
+            var min   =document.getElementById('min');
+            var sec   = document.getElementById('sec');
+            var cen   = document.getElementById('cen');
+
+            var lis = "";
+
+            for(var i = 0;i<60;i++){
+                lis += "<li></li>";
+                // 注意: innerHTML写的是字符串，要加上引号，但是数值要用+连接
+                addcss.innerHTML += "#lists li:nth-of-type("   +(i+1)+     "){transform:rotate("   +i*6+    "deg);}"
+            }
+
+            lists.innerHTML = lis;
+            toTime();
+            //你个傻逼，第一个参数是函数名，或者是带有返回值的函数引用，搞不懂直接看保存的或者用函数名不带括号的
+             setInterval(toTime,1000);
+
+            function toTime(){
+                var date = new Date();
+                var s = date.getSeconds();
+                var m = date.getMinutes() + s/60;
+                var h = date.getHours() + m/60;
+
+                hour.style.transform = "rotate("  +h*30+  "deg)";
+                min.style.transform = "rotate("  +m*6+  "deg)";
+                sec.style.transform = "rotate("  +s*6+  "deg)";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box">
+        <ul id="lists"></ul>
+        <div id="hour"></div>
+        <div id="min"></div>
+        <div id="sec"></div>
+        <div id="cen"></div>
+    </div>
+</body>
+</html>

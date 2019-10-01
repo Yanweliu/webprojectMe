@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ShutterCarousel百叶窗切换轮播</title>
+    <style>
+        *{margin: 0 ;padding: 0;}
+        .main{width:990px;height: 480px;position: relative;margin: 0 auto; border: solid 1px skyblue ;}
+        .content{width: 100%; height: 100%;}
+        .content div {width: 330px;height: 100%;float: left;position: relative;overflow: hidden;}
+        .content>div span{width: 100% ;height: 100%;top: 0;left: 330px;display: block;position: absolute;}
+
+
+         label{height: 30px; width: 30px;border-radius: 50%;background: steelblue;text-align: center;position: absolute;
+              z-index: 10;cursor: pointer;line-height: 30px;top: 400px;right: 50px;margin-right: 50px;display: block;}
+         input#btn1+label{left:760px ;}     
+         input#btn2+label{left:820px ;}     
+         input#btn3+label{left:880px ;} 
+         input{display: none;}  /*这一点是把该死的radio去掉，直接不显示，看不见了，但存在效果 */
+         input:checked+label{background: rgb(143, 194, 141);}
+
+
+         /* 给每个div的第一个span都添加了第一张图片，第二个span都添加了第二张图片，只不过显示区域不同 */
+         input#btn1:checked ~ .content div span:nth-child(1){background-image: url("img/butter1.jpg")}
+         input#btn2:checked ~ .content div span:nth-child(2){background-image: url("img/butter2.jpg")}
+         input#btn3:checked ~ .content div span:nth-child(3){background-image: url("img/butter3.jpg")}
+
+
+
+/* 此处是没疑问的，直接用span把一个背经分三份 */
+        .content div:nth-child(1) span{ background-position: 0px 0px; }
+        .content div:nth-child(2) span{ background-position: -330px 0px; }
+        .content div:nth-child(3) span{ background-position: -660px 0px; }
+
+
+/* 所有的被选中的content的所有div的所有第一个span左移330px。因为div的span100%占满，且只有checked时才添加图片，所以移动时
+背景为空白，不会重影 */
+        input#btn1:checked ~ .content div span:nth-child(1),
+		input#btn2:checked ~ .content div span:nth-child(2),
+		input#btn3:checked ~ .content div span:nth-child(3)
+		{ left:0px; transition:left 0.5s ease; }
+
+    </style>
+</head>
+
+
+
+
+
+<body>
+    <!-- <div>
+        特别是使用CheckBox，
+            如果没绑定的话需要鼠标点击小方框，才可以选中或不选，
+            绑定以后label就可以改变CheckBox的值，radio的值，以及让焦点聚集到文本输入框中 
+        <label for="nan1">男</label>
+        <input type="checkbox" id="nan" />
+         <label for="nv">女</label>
+        <input type="checkbox" id="nv" /> ---->
+
+
+        <!-- p:nth-child(n)  选中p元素，且该p元素必须是某个父元素下的第n个子元素
+          比如p:nth-child(1)  选不中p，因为p必须是div下的第一个子元素,并且n从1开始
+          <div> 
+              <h></h>
+              <p></p>
+          </div> -->
+
+
+
+
+
+          <!-- 正儿八经的想法
+               1.整个content分割成三比分，每一张背景图片都用span分成三份，每一个span负责显示
+                 这个背景图的不同部分，多出来的hidden。并且谁是checked换谁的background，class一样，checked就只会是一个
+                 只为这一个设置左移的动画，left等于0之类
+
+               2.为每一个span设置checked后的位置，把span向右
+            
+               3.选择器的用法，特别是span的第一个孩子，第二个孩子-->
+
+          <div class = "main">
+              <input type="radio" name="btn" id = "btn1" checked /><label for="btn1">1</label>
+              <input type="radio" name="btn" id = "btn2" /><label for="btn2">2</label>
+              <input type="radio" name="btn" id = "btn3" /><label for="btn3">3</label>
+              <div class="content">
+                  <!-- 第一张背景图三个比分span -->
+                  <div>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                  </div>
+
+                  <div>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                  </div>
+
+                  <div>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                  </div>
+                  
+              </div>
+          </div>
+
+     
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MouseHover(鼠标划入显示文字动画)</title>
+    <style>
+        *{margin:0 auto;}
+        .main{width: 990px;margin: 30px auto;}
+        .content{width: 300px;height: 450px;margin-right: 27px;position: relative;overflow: hidden;cursor: pointer;
+         float: left;}
+         .content img{height: 100%;width: 100%;}
+         .content span{display:block;width:100%;height: 100%; left:-100%;background: rgb(107, 106, 106);
+         position:absolute;top:0;color: honeydew;transition: all 0.5s ease-in-out;opacity: 0.5;padding: 40px 20px;
+         box-sizing: border-box;}
+         .content h3{left: -300px;text-align: center;transition: all 1s ease;position: relative;margin-bottom: 30px;}
+         .content P {left: -300px;transition: all 1s ease;position: relative;margin-top:30px;}
+/*注意.content:hover 必须连着写，不连着写就不能识别出是content的属性  */
+         .content:hover span{left: 0; top: 0;}
+         .content:hover p{left: 0;top: 0;}
+         .content:hover h3{left: 0;top: 0;}
+    </style>
+</head>
+
+
+
+<!-- 实现功能
+ 1.进入图片实现文字划入显示，文字划入，用left属性，
+ 2.退出图片实现效果消失，hover属性 
+ 3.当Position属性值为Relative时，对象原来占有的位置保留，其后面的对象按原来文档流仍然保持原来的位置。
+   position有霸道的耍流氓行为，margin可以解决的就不要用 -->
+<body>
+    <div class="main">
+        <!-- 第一个图片以及文字 -->
+        <div class="content">
+            <img src="img/HoverInfo1.jpg">
+            <span >
+                <h3>熊本熊壁纸</h3>
+                <p><b>下载内容</b><br/>狗熊掰棒子壁纸</p>
+                <p><b>下载介绍</b><br/>日本最火的狗熊掰棒子壁纸，代表日本人爱吃玉米</p>
+                <p><b>下载费用</b><br/>￥1234</p>
+            </span>
+        </div>
+
+        <!-- 第二个图片以及文字 -->
+        <div class="content">
+            <img src="img/HoverInfo2.jpeg">
+            <span >
+                <h3>熊本熊壁纸</h3>
+                <p><b>下载内容</b><br/>狗熊掰棒子壁纸</p>
+                <p><b>下载介绍</b><br/>日本最火的狗熊掰棒子壁纸，代表日本人爱吃玉米</p>
+                <p><b>下载费用</b><br/>￥1234</p>
+            </span>
+        </div>
+
+        <!-- 第三个图片以及文字 -->
+        <div class="content">
+            <img src="img/HoverInfo3.jpeg">
+            <span >
+                <h3>熊本熊壁纸</h3>
+                <p><b>下载内容</b><br/>狗熊掰棒子壁纸</p>
+                <p><b>下载介绍</b><br/>日本最火的狗熊掰棒子壁纸，代表日本人爱吃玉米</p>
+                <p><b>下载费用</b><br/>￥1234</p>
+            </span>
+        </div>
+    </div>
+    
+</body>
+</html>

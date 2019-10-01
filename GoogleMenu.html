@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GoogleMenu</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        ul{height: 200px;width: 200px;margin: 50px auto;list-style: none;background: rgba(96, 130, 143, 0.582);}
+        li{height: 50px;width: 50px;position: relative;background: rgb(110, 196, 230); }
+        a{text-align: center;text-decoration: none;line-height: 50px;position:absolute;width:150px;
+          left: 50px;top: 0px; display: block;color: rgb(20, 20, 20);font-size: 19px;}
+        a:hover{color:#fff;}
+        ul li:hover{width: 200px; transition: all 0.5s ease;}
+        li:nth-child(1){background: rgb(62, 209, 197) url("MenuImg/Google1.png") no-repeat 12px;}
+        /*这是background的属性，即background-position，既可以用cente等，也可以用px，代表水平向右偏移多少*/
+        li:nth-child(2){background:rgb(209, 117, 56) url("MenuImg/Google2.png") no-repeat 12px center;}
+        li:nth-child(3){background: blueviolet url("MenuImg/Google3.png") no-repeat 12px center;}
+        li:nth-child(4){background: rgb(134, 201, 47) url('MenuImg/Google4.png') no-repeat 12px center;}
+    </style>
+</head>
+
+
+
+<body>
+    <ul>
+        <li > <a href="#">购物</a></li>
+        <li > <a href="#">音乐</a></li>
+        <li > <a href="#">影视</a></li>
+        <li > <a href="#">图书</a></li>
+    </ul>
+    
+</body>
+</html>

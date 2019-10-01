@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CheckBox(全选和全不选)</title>
+    <style>
+        *{margin: 0 ;padding: 0;}
+        dl{width: 200px;margin: 39px auto;border: rgb(143, 224, 204) solid 3px;text-align: center;
+           background: cadetblue;padding: 30px 0px;}
+        dt{line-height: 50px;border-bottom: 1px gray solid;text-align: left;}  
+        dd p{line-height: 30px;margin-top: 40px;text-align: left;margin-left: 4px;}
+         /*完美解决checkbox单选框和文字间距的问题  */
+        input[type = "checkbox"]{margin-left: 3px;margin-right:7px;}
+        #bottom{width: 400PX;margin: 0 auto;text-align: center;bottom:0px;background: lightgray;
+                font-size: 6px;}
+        a{text-decoration: none;color: azure;font-size: 15px;margin-left: 8px;}  
+        a:hover {color: black}                          
+    </style>
+    <script>
+        window.onload = function(){
+
+            var checkAll = document.getElementById('checkAll');
+            var checkReverse =  document.getElementById('checkReverse');
+            var lab = document.getElementsByTagName('label')[0];
+            var inputs = document.getElementsByTagName('input');
+
+ // 根据dd里面的CheckBox的个数来改变lab的内容，全是checked变为全不选，否则全选,需要遍历true的个数，并且计数true
+            function IsAll (){
+                for(var i = 1 ,n = 0;i < inputs.length;i++){
+                    inputs[i].checked && n++;
+                }
+                inputs[0].checked  = n == inputs.length-1;
+                lab.innerHTML = inputs[0].checked? '全不选' :'全选';
+            }
+
+// 实现全选
+           checkAll.onclick =  function (){
+                for(var i = 1;i<inputs.length;i++){
+                    inputs[i].checked = inputs[0].checked;
+                }
+                IsAll();
+            }
+            
+            //全不选
+            checkReverse.onclick =  function (){
+                for(var i = 1;i <=inputs.length-1;i++){
+                    inputs[i].checked = !inputs[i].checked;
+                }
+                IsAll();
+            }
+            
+            //根据下面的checked判断上面是否改变,还有函数里面不要定义函数真的很傻逼,目前水平来看是的
+
+           
+                for(var i = 1;i<inputs.length;i++){
+
+                    inputs[i].onclick = function(){
+                        IsAll();
+                    }
+                }
+        }
+    </script>
+</head>
+
+
+<body>
+    <dl>
+        <dt>
+            <!-- <label> 标签为 input 元素定义标注（标记）。
+label 元素不会向用户呈现任何特殊效果。不过，它为鼠标用户改进了可用性。
+如果您在 label 元素内点击文本，就会触发此控件。就是说，当用户选择该标签时，浏览器就会自动将焦点转到和标签相关的表单控件上。
+<label> 标签的 for 属性应当与相关元素的 id 属性相同。 -->
+            <input type="checkbox" id="checkAll" > <label>全选</label>
+            <a href="javascript:void(0);" id="checkReverse">反选</a>
+        </dt>
+        <dd>
+            <!-- 注意p 元素是块级元素，单独占一行 -->
+            <p><label><input type="checkbox"/>计算机组成原理</label></p>
+            <p><label><input type="checkbox"/>数据结构</label></p>
+            <p><label><input type="checkbox"/>算法</label></p>
+            <p><label><input type="checkbox"/>通信原理</label></p>
+        </dd>
+    </dl>
+    <div id="bottom">点击实现全选、全不选、反选选择</div>
+</body>
+</html>

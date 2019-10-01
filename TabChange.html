@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TabChange(hover切换表格信息)</title>
+    <!-- 第一次遇见把数据编入到js的，把数据写成数组样式，每个数组都有很多属性
+         用JavaScript添加节点，用数组遍历添加到创建的li中,,,,就是先建骨架，之后用creat和add添li 
+         summary： 1：js引用的文件写法要标准        属性 ： '属性值',        
+                   2: innerhtml先添加语句，注意字符要用+ 和‘’连接    -->
+
+<style>
+    *{margin: 0;padding: 0}
+    #header .contempory{background: rgb(104, 221, 186);color: aliceblue;}
+    ul{list-style: none;}
+    #container{width: 1000px;margin: 0 auto;}
+    #header{border-bottom: rgb(239, 240, 237) solid 3px;height: 40px;}
+    #header li{float:left ;height:40px;width: 120px;font-weight: bold;text-align: center;color: black;line-height: 40px;}
+    #header li:hover{cursor: pointer;}
+    #listContent{height: 30px; line-height: 30px;color: slategray;font-size: 20px;}
+    #tips{position: absolute;padding: 3px;left:3px;top:3px ;width: 400px;display: none;border: beige solid 3px;background: rgb(178, 212, 124);}
+    #tips li{list-style: none;font-size: 20px;height: 50px;line-height: 50px;}
+    #tips li.col {width: 180px;height: 30px;float: left;line-height: 30px;border-bottom: rgb(151, 192, 233) solid 1px;}
+
+</style>
+
+<script src="jquery/data.js"></script> 
+<script>
+    window.onload = function(){
+        var Ocon = document.getElementById("container");
+        var Oul = document.getElementById("header");
+        var Odiv =document.getElementById('listContent');
+        var Otip = document.getElementById("tips");
+        var Otips = document.getElementById("tipsContent");
+
+        for (var i = 0;i< data.length;i++){
+            Oul.innerHTML += "<li>"+data[i].name+"</li>"
+        }
+
+        // 默认显示第一个大表的内容，先把两个li的内容都清空，在单独添加
+        var lits = Oul.getElementsByTagName('li');
+        lits[0].className = "contempory";
+
+        for(var i = 0;i<lits.length;i++){
+            lits[i].index = i;
+            lits[i].onclick = function(){
+                for( var j = 0;j<lits.length;j++){
+                    lits[j].className  = "";
+                    Odiv.innerHTML = "";
+                    Otips.innerHTML = "";
+                }
+                this.className = "contempory";
+                fun(data[this.index]);
+            }
+        }
+        fun(data[0]);
+
+        function fun (da){
+            for(var i = 0; i<da.list.length;i++){
+                var ul = document.createElement('ul');
+                var li  = document.createElement('li');
+                var a = document.createElement('a');
+                a.innerHTML = da.list[i].title;
+                a.href = 'javascript:void(0)';
+                li.appendChild(a);
+                ul.appendChild(li);
+                Odiv.appendChild(ul);
+                a.index  =i;
+                var h4  = document.createElement('h4');
+                var li1 = document.createElement('li'); li1.className = "col";
+                var li2 = document.createElement('li'); li2.className = "col";
+                var li3 = document.createElement('li'); li3.className = "col";
+                var li4 = document.createElement('li'); li4.className = "col";
+                var li5 = document.createElement('li'); li5.className = "col";
+                var li6 = document.createElement('li'); li6.className = "col";
+
+                a.onmouseover = function(){
+                    Otip.style.display = "block";
+                    Otip.style.left = Ocon.offsetLeft + this.offsetWidth + 10+"px";
+                    Otip.style.top = this.offsetTop + this.scrollTop + "px";
+                    h4.innerHTML = da.list[this.index].company;
+                    li1.innerHTML = da.list[this.index].number;
+                    li2.innerHTML = da.list[this.index].location;
+                    li3.innerHTML = da.list[this.index].experience;
+                    li4.innerHTML = da.list[this.index].education;
+                    li5.innerHTML = da.list[this.index].wage;
+                    li6.innerHTML = da.list[this.index].date;
+                    Otips.appendChild(h4);
+                    Otips.appendChild(li1);
+                    Otips.appendChild(li2);
+                    Otips.appendChild(li3);
+                    Otips.appendChild(li4);
+                    Otips.appendChild(li5);
+                    Otips.appendChild(li6);
+                }
+                li.onmouseout = function (){
+                    Otip.style.display = "none";
+                }
+            }
+
+        }
+
+    }
+</script>        
+</head>
+
+
+
+<body>
+    <div id = "container">
+        <ul id="header"></ul>
+        <div id="listContent"></div>
+    </div>
+    <div id="tips">
+        <span id="arrow"></span>
+    <div id="tipsContent"></div>    
+    </div>
+</body>
+</html>

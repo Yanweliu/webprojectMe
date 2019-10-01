@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DrawerMenu(抽屉菜单)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #list {
+            width: 230px;
+            background: rgba(59, 59, 59, 0.247);
+            margin-left: 30px;
+            box-shadow: 40px 30px 5px rgba(148, 148, 148, 0.384);
+            border: rgba(183, 236, 243, 0.514) 1px;
+        }
+
+        #list .title {
+            height: 70px;
+            text-align: center;
+            color: beige;
+            line-height: 70px;
+            font-size: 30px;
+        }
+
+        #list li {
+            list-style: none;
+            color: aliceblue;
+            line-height: 50px;
+            border-top: 1px gray solid;
+            cursor: pointer;
+            font-weight: bold
+        }
+
+        #list img {
+            height: 15px;
+            width: 15px;
+            margin-left: 60px;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        #list .con {
+            width: 100%;
+            display: none;
+        }
+
+        #list .con li {
+            line-height: 30px;
+            background: paleturquoise;
+            font-size: 15px;
+        }
+
+        #list .con img {
+            margin-left: 75px;
+        }
+
+        .hover {
+            background: rgb(190, 197, 197);
+        }
+    </style>
+
+    <script src="jquery/jQuery-1.8.3.js"></script>
+    <script>
+        // hover() 方法规定当鼠标指针悬停在被选元素上时要运行的两个函数。
+        // 方法触发 mouseenter 和 mouseleave 事件。
+        //注意: 如果只指定一个函数，则 mouseenter 和 mouseleave 都执行它。
+        $(function () {
+            $('#list li').click(function () {
+                if ($(this).hasClass('hover')) {
+                    $(this).removeClass('hover');
+                } else {
+                    $(this).addClass('hover');
+                }
+                $(this).find('.con').slideToggle('slow');
+                $(this).siblings().removeClass('hover').find('.con').slideUp('quickly');
+            });
+
+            $('.con li').hover(function(){
+                $(this).css("background","grey");
+            },function(){
+                $(this).css("background","paleturquoise");
+            })
+        })
+    </script>
+
+</head>
+<!-- inline 不换行不能设置宽高，block换行，独占一行。img，input，buttom，label是内联元素，
+    但又是可置换元素，根据src 和type显示，因此可以设置宽高，他们的属性就如同inline-block -->
+
+<body>
+    <div id="list">
+        <div class="title">
+            <h2>目录</h2>
+        </div>
+        <ul>
+            <li>
+                <img src="MenuImg/Drawer1.png" />消息
+                <div class="con">
+                    <ul>
+                        <li><img src="MenuImg/Drawer5.png" />网站信息</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <img src="MenuImg/Drawer2.png" />草稿箱
+                <div class="con">
+                    <ul>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <img src="MenuImg/Drawer3.png" />邮件
+                <div class="con">
+                    <ul>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <img src="MenuImg/Drawer4.png" />垃圾箱
+                <div class="con">
+                    <ul>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                        <li><img src="MenuImg/Drawer5.png" />1233</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

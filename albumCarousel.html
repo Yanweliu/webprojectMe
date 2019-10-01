@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>album(相册查看器)</title>
+    <style>
+        *{margin: 0;padding: 0;}
+
+        #warp{width: 1000px;height: 400px; margin: 0 auto;}
+        /* box-shadow: 水平阴影 竖直阴影 阴影范围      font-size:0;让插入img的a标签高度为0，原先默认29px    */
+
+        #imgs ul li{box-shadow: 4px 4px 6px rgb(25, 26, 27); font-size: 0; 
+          list-style: none;margin: 10px 30px;float: left;border-radius: 10px}
+
+        /* ul{margin: 0 auto;} */
+
+        #imgs{width: 117%;height: 100% ;margin: 0 auto;}
+
+        #black{width: 1366px;height: 700px;background: rgba(155, 155, 155, 0.363);
+         position: absolute;top: 0;left: 0;display: none;}
+
+        #big{width: 600px;height: 300px;position: absolute;border: honeydew 1px; display: none;}
+        #left{left: -40px;top: 56%;position: absolute;}
+        #right{right: -90px;top: 56%;position: absolute;}
+
+        /* #left{left: } */
+    </style>
+
+   
+
+</head>
+<body>
+    <div id="warp">
+        <div id="imgs">
+            <ul>
+                <li><a href="img/albumBig1.jpg"><img src="img/albumSmall1.jpg"></a></li>
+                <li><a href="img/albumBig2.jpg"><img src="img/albumSmall2.jpg"></a></li>
+                <li><a href="img/albumBig3.jpg"><img src="img/albumSmall3.jpg"></a></li>
+                <li><a href="img/albumBig4.jpg"><img src="img/albumSmall4.jpg"></a></li>
+                <li><a href="img/albumBig5.jpg"><img src="img/albumSmall5.jpg"></a></li>
+                <li><a href="img/albumBig6.jpg"><img src="img/albumSmall6.jpg"></a></li>
+            </ul>
+        </div>
+        <div id="black"></div>
+        <div id="big">
+            <img src="img/dirl.png" id="left">
+            <img src="img/dirr.png" id="right">
+            <img src=""  id="EmbedImg">
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+    <script>
+        window.onload = function(){
+            var warp  = document.getElementById('warp');
+            var imgs = document.getElementById('imgs');
+            var black = document.getElementById('black');
+            var big = document.getElementById('big');
+            var lis = warp.getElementsByTagName('a');
+            var cur = 0;
+
+            for(var i = 0;i<lis.length;i++){
+
+                
+                lis[i].index = i;
+
+                lis[i].onclick = function(){
+                     black.style.display = "block";
+                     big.style.display = "block";
+                     big.style.left =big.style.top =  "50%";
+                     big.style.marginLeft  =   -big.offsetWidth/2 +'px';
+                     big.style.marginTop = -big.offsetHeight/2 +'px';
+                     var src = this.href;
+                     EmbedImg.src = src;
+
+                     cur = this.index;
+                   
+                     
+                     console.log(this);//显示a标签，a标签嵌入了li里面，index不能获得
+                     console.log(cur);//没有lis[i].index = i这一步的话，cur显示undefined，cur=i的话，cur就不会随着this变了
+
+
+                     left.onclick = function(){
+                         cur--;
+                         if(cur < 0 ){cur = lis.length-1;}
+                         EmbedImg.src = lis[cur].href;
+//穿衣服，src相当于换内裤，内裤要换必须要脱另一条 或者说脱掉所有衬衫外套和内裤，没有人穿几条内裤；
+// href是引用，随意换。src是引入，不能，是真是的一部分
+// href相当于穿外套，我可以一遍换一遍刷牙或穿鞋子
+                     }
+                     right.onclick = function(){
+                         cur++;
+                         if(cur>lis.length-1){cur = 0;}
+                         EmbedImg.src = lis[cur].href;
+                     }
+
+
+
+
+                return false;
+            }
+          }
+
+          black.onclick = function(){black.style.display = "none";big.style.display = "none" ; }
+
+
+        }
+    </script>
+</body>
+</html>

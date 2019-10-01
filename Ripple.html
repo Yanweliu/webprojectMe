@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ripple(水滴效果点击菜单)</title>
+    <!-- 要求实现效果，点击按钮，会有水波样式的动画出现
+        1.ripple动画，scale = 0；到scale = 2；总之填满，动画加在类选择器上，选择器在点击时加到li上
+        2.确定ripple动画点击点，即left top 位置。要求跟随鼠标点击位置变化而变化
+        3.点击当前li，同时清除其他li上动画，再给当前li添加动画 -->
+    <style>
+        ul {
+            margin: 40px auto;
+            padding: 0;
+            user-select: none;
+            position: relative;
+            font-size: 0;
+            width: 480px;
+        }
+
+        li {
+            width: 160px;
+            height: 60px;
+            display: inline-block;
+            list-style: none;
+            font-size: 20px;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+            line-height: 60px;
+            background: grey;
+            color: honeydew;
+
+
+            text-transform: uppercase;
+        }
+
+        .slider {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: rgb(140, 209, 29);
+            transition: all 0.5s ease;
+        }
+
+        .ripple {
+            height: 0;
+            width: 0;
+            background: rgb(35, 162, 201);
+            border-radius: 50%;
+            -webkit-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            opacity: 1;
+        }
+
+        .rippleEffect {
+            -webkit-animation: rippleDrop .4s linear;
+            animation: rippleDrop .4s linear;
+        }
+
+        @-webkit-keyframes rippleDrop {
+            100% {
+                -webkit-transform: scale(2);
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rippleDrop {
+            100% {
+                -webkit-transform: scale(2);
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script type="text/javascript" src="jquery/jQuery-1.8.3.js"></script>
+    <script>
+        $(function () {
+            $('ul li').click(function (e) {
+                if ($(this).hasClass('slider')) {
+                    return;
+                }
+
+                var whichTab = $(this).index();
+                var howFar = whichTab * 160;
+                $('.slider').css({
+                    left: howFar + "px"
+                });
+
+                //每次点完都要清除，否则会每个都很多《span》.点击一次多一次.
+                $('.ripple').remove();
+
+
+                //记住，jQuery的offset是个方法，带着（），offset() 方法返回或设置匹配元素相对于文档的偏移（位置）
+                //别再傻着当成属性了，否则什么ripple动画都不会显示，因为没有得到数据
+                var posx = $(this).offset().left;
+                 var   posy = $(this).offset().top;
+                  var  buttonwidth = $(this).width();
+                  var  buttonheight = $(this).height();
+
+
+
+                $(this).append("<span class = 'ripple'></span>");
+
+                // 开始给li中加入ripple类，ripple类需要有东西承载。添加span子节点给li.
+                // append() 方法在被选元素的结尾（仍然在内部）插入指定内容。
+
+                // 开始计算鼠标点击坐标。
+
+                if ( buttonwidth>=buttonheight ) {
+                    buttonheight = buttonwidth;
+                } else {
+                    buttonwidth = buttonheight;
+                }
+
+                var x = e.pageX - posx - buttonwidth / 2;
+                var y = e.pageY - posy - buttonheight / 2;
+                console.log(e);
+
+                $(".ripple").css({
+                    width: buttonwidth,
+                    height: buttonheight,
+                    top: y + 'px',
+                    left: x + 'px'
+                }).addClass("rippleEffect");
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <ul>
+        <li>Tab one</li>
+        <li>Tab two</li>
+        <li>Tab three</li>
+        <li class="slider"></li>
+    </ul>
+</body>
+
+</html>

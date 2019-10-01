@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ButtonSwicth</title>
+    <!-- 试试看自己独立解决一个简单点的问题
+         实现1.没有auto播放，纯粹是给两个按钮添加onclick，点击图片左右移动
+         应该和3d轮播切换的代码差不多，设置class数组，pop push 改变数组顺序，从而给不同li赋值
+         2.给这三组图片设置相同的动画，就只需要设置三个图片class，遍历清除特定添加，
+         看来要用jQuery，比classname=‘’，再classname=“特定”简单 
+         3.第一次按left按钮，显示不能再左了，最后一次按right显示不能再右了-->
+         <style>
+             *{margin: 0 auto;}
+
+             #content{
+                 position: relative;
+                 width: 800px;
+                 height :300px;
+                 border: skyblue 3px solid;
+                 overflow: hidden;
+             }
+             ul{
+                 list-style: none;
+                 margin: 50px auto;
+                 width: 600px;
+                 height :300px;
+                 padding-left: 0px;
+                
+             }
+             li{
+                 /* left:0; */
+                 list-style: none;
+                 position: absolute;
+             }
+            img{
+                margin-top: 20px;
+                /* float: left; */
+            }
+             #left{
+                 position: absolute;
+                 top:22%;
+               
+             }
+             #right{
+                 position: absolute;
+                 top: 22%;
+                 right: 0;
+             }
+             p{
+                 text-align: center;
+             }
+             .p1{
+                 transform: translate3d(5px) ;
+                 transition-duration: 0.3s;
+             }
+             .p2{
+                 transform: translateX(240px);
+                 transition-duration: 0.3s;
+             }
+             .p3{
+                 transform: translateX(475px);
+                 transition-duration: 0.3s;
+             }
+             .p5{
+                 transform: translateX(800px);
+             }
+             .p4{
+                 transform: translateX(800px);
+             }
+             .p6{
+                 transform: translateX(800px);
+             }
+             .p7{
+                 transform: translateX(-300px);
+             }
+             .p8{
+                 transform: translateX(-300px);
+             }
+             .p9{
+                 transform: translateX(-300px);
+             }
+
+         </style>
+        
+</head>
+
+<body>
+    <div id ="content">
+        <img id = "left"  src="img/ButtonSwitchL.jpg">
+        <ul class = "img">
+            <li class="p1"><img src="img/ButtonSwitch1.jpg"><p>1</p></li>
+            <li class="p2"><img src="img/ButtonSwitch2.jpg"><p>2</p></li>
+            <li class="p3"><img src="img/ButtonSwitch4.jpg"><p>3</p></li>
+
+            <li class="p4"><img src="img/ButtonSwitch3.jpg"><p>4sisissiisi</p></li>
+            <li class="p5"><img src="img/ButtonSwitch2.jpg"><p>5555</p></li>
+            <li class="p6"><img src="img/ButtonSwitch1.jpg"><p>6</p></li>
+
+            <li class="p7"><img src="img/ButtonSwitch1.jpg"><p>77777777777777</p></li>
+            <li class="p8"><img src="img/ButtonSwitch2.jpg"><p>8888888</p></li>
+            <li class="p9"><img src="img/ButtonSwitch1.jpg"><p>989999999</p></li>
+
+        </ul>
+        <img id="right" src ="img/ButtonSwitchR.jpg">
+
+
+
+
+        <script type="text/javascript" src="jquery/jQuery-1.8.3.js"></script>
+        <script type="text/javascript">
+           //  var right = $("#right");
+
+            // 反思
+            // 1.一开始就想着三个图片一组，整一个二维数组，一次切换三个图片
+                //  其实，给前三个类设置好进入框的类，其余在外面就可以用UNshift，pop来给图片动态切换类
+                // 用二维数组在each（） $（e）.moveclass().addclass(arr[i][])时太他妈麻烦，根本行不通
+                // 用一维数组就可以，变换一次即使给所有的图片换了class，p1 p2 p3顺延一位，也就显示框内的整体向后向前一位
+            // 2.script目前还是先放在body中，放在head中加载太他妈慢了根本不显示
+
+
+
+            var arr = ["p1","p2","p3","p4","p5","p6","p7","p8","p9"];
+            var imgs = document.getElementsByTagName('li.img');
+               
+            $("#right").click(function () {
+               next();
+            })
+
+            $("#left").click(function () {
+               pre();
+            })
+
+          
+
+            function next(){
+               arr.unshift(arr[8]);
+               arr.pop(arr);
+               $('li').each(function(i,e){
+                   $(e).removeClass().addClass(arr[i]);
+               })
+            } 
+
+
+            function pre(){
+                arr.push(arr[0]);
+                arr.shift(arr);
+                $("li").each(function(i,e){
+                    $(e).removeClass().addClass(arr[i]);
+                })
+            }
+        </script>
+    </div>
+</body>
+</html>

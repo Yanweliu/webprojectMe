@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iphoneMenu</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        #menu{position: absolute;width: 100%;bottom: 0;text-align: center;}
+    </style>
+    <script>
+        window.onload  = function(){
+            var menu = document.getElementById("menu");
+            var imgs = document.getElementsByTagName('img');
+            var arr = [];
+
+            for(var i = 0;i<imgs.length;i++){
+                arr.push(imgs[i].offsetWidth);
+                imgs[i].width = parseInt(imgs[i].offsetWidth/2);
+            }
+
+            document.onmousemove = function(event){
+              var ev = event ||   window.event;
+              for(var i = 0;i<imgs.length;i++){
+                  var a = event.clientX-imgs[i].offsetLeft-imgs[i].offsetWidth/2;
+                  var b = event.clientY-imgs[i].offsetTop-imgs[i].offsetHeight/2-menu.offsetTop;
+                  var scale = 1-Math.sqrt(a*a + b*b)/300;//除以300这个数字，绝对是随便换的，一个个试出来的，这个算式的意思
+                                                         //就是以图片为中心，鼠标距中心的距离，勾股定理算出来，但要进行放缩
+                                                         //alt+shift+k,是格式化代码，让代码缩进
+                  if(scale <0.5){
+                      scale = 0.5;
+                  }
+                  imgs[i].width = arr[i]*scale;
+              }
+            }
+        }
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="menu">
+        <img src="MenuImg/iphone1.png" alt=""/>
+        <img src="MenuImg/iphone2.png" alt=""/>
+        <img src="MenuImg/iphone3.png" alt=""/>
+        <img src="MenuImg/iphone4.png" alt=""/>
+    </div>
+</body>
+</html>

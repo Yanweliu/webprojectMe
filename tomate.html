@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RotateImg（鼠标hover图片旋转切入）</title>
+    <style>
+        *{margin: 0 ;padding:0;}
+        .main{height: 800px;width: 1005px;margin: 40px auto;}
+        .main li{list-style: none;float:left;height:280px; width:315px; box-shadow:black 0 0 5px;overflow:hidden;
+         cursor: pointer; margin: 10px;}
+        .rotate{height: 560px;width:315px;transition: all 0.5s ease;}
+        .under{height: 279px;width:315px;background: rgb(124, 123, 123);color:honeydew; 
+            -webkit-transform:rotate(-180deg); line-height: 1.4;padding: 10px;}
+            /* 这一步先把下面的东西倒过来，不然一会直接倒上字会颠倒
+            -webkit-transform为chorme属性，transform没效果 */
+
+        .under h2{ font-size: 14px;margin: 20px 20px; }
+        .under p{font-size: 15px;margin: 20px 20px;}
+        .main  li:hover .rotate{-webkit-transform:rotate(180deg)}
+    </style>
+   <!-- <script src="jquery/jQuery-1.8.3.js"></script>
+   <script></script> -->
+</head>
+
+
+<body>
+    <ul class="main">
+        <li>
+            <div class="rotate">
+                <img src="img/rotate1.jpg"/>
+                <div class="under">
+                    <h2>这是一个神奇的图片</h2>
+                    <p>太平洋的海风吹来马尔代夫的花香，和煦的阳光洒在了银白色的沙滩上。
+                        这一天，刘壮士要为远道而来的客人们献上一道特色美食，麻辣鸡</p>
+                </div>
+            </div>
+        </li>
+
+        <li>
+                <div class="rotate">
+                        <img src="img/rotate2.jpg"/>
+                        <div class="under">
+                            <h2>这是一个神奇的图片</h2>
+                            <p>太平洋的海风吹来马尔代夫的花香，和煦的阳光洒在了银白色的沙滩上。
+                                这一天，刘壮士要为远道而来的客人们献上一道特色美食，麻辣鸡</p>
+                        </div>
+                        </div>
+        </li>
+
+        <li>
+                <div class="rotate">
+                        <img src="img/rotate3.jpg"/>
+                        <div class="under">
+                            <h2>这是一个神奇的图片</h2>
+                            <p>太平洋的海风吹来马尔代夫的花香，和煦的阳光洒在了银白色的沙滩上。
+                                这一天，刘壮士要为远道而来的客人们献上一道特色美食，麻辣鸡</p>
+                        </div>
+                        </div>
+        </li>
+    </ul>
+
+
+    
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BorderSlide(边框滑动菜单)</title>
+
+    <style>
+        *{margin: 0;padding:0;}
+        body{background: skyblue;}
+        .box{width:800px;height: 280px;margin: 50px auto;}
+        .box .link{width: 380px;height: 280px;margin: 0 auto;float: left;}
+        .link .icon{width: 100%;height: 190px;cursor: pointer;background: url(MenuImg/iphone4.png)no-repeat center;
+                    transition: 0.2s ease-out;display: inline-block; background-size: 90px 90px;}
+        .link .icon:hover{transform: rotate(360deg) scale(0.7); }   
+
+        .link .button{display: block;width: 180px;height: 50px;line-height: 50px;text-decoration: none;border: 2px solid whitesmoke;
+                     box-sizing: border-box;padding-left: 20px;margin: 0 auto;background: url(MenuImg/BorderSlide.png)no-repeat 130px center;
+                     background-size: 30px 30px;transition: 0.4s ease;color: aliceblue;position: relative;}  
+        .button:hover{border: 2px solid darkgrey;background-position: 140px center;}
+
+
+
+        /* .button .line{position: absolute;background: none;transition: 4s ;}  
+        .button:hover .line{background:#fdb;}   
+
+        .line-top{width: 0px;height: 2px;top: -2px;left: -110%;}  
+        .button:hover .line-top{width:180px;left: -2px;}  
+           这一段和下面一段效果一样，只不过这一段是把两个类一起加载到了 <span class="line line-top"></span>  上，
+           下面一段全部一次加上                            */
+        .line-top{width: 0px;height: 2px;top: -2px;left: -110%;position: absolute;background: none;transition: .4s;}  
+        .button:hover .line-top{width:180px;left: -2px; background: rgb(78, 77, 75);}   
+
+        .line-right{height: 0px;width: 2px;right: -2px;top: -110%;position: absolute;background: none;transition: .4s;}
+        .button:hover .line-right{height: 50px;top: -2px;background: rgb(78, 77, 75);}    
+
+        .line-bottom{width: 0px;height: 2px;bottom:-2px;right: -110%;position: absolute;background: none;transition: .4s;}
+        .button:hover .line-bottom{width: 180px;right: -2px;background: rgb(78, 77, 75);}    
+
+        .line-left{height: 0px;width: 2px;left: -2px;bottom: -110%;position: absolute;background: none;transition: .4s;} 
+        .button:hover .line-left{height: 50px;bottom: -2px;background: rgb(78, 77, 75);}  
+
+        .tip{position: absolute;padding:0 14px;height:35px;line-height:35px;background:grey;
+             margin: 0 auto;top: 100px;opacity: 0;color: #fff;border-radius: 4px;font-size: 18px;}  
+        .tip em{font-size: 18px;color:#fff;}     
+        .tip span{display: block;width: 0;height: 0;overflow: hidden;position: absolute;top:35px;left: 50%;
+                  border:7px solid transparent;border-top-color: grey;margin-left: -6px; }                                             
+    </style>
+
+
+    <script src="jQuery/jQuery-1.8.3.js"></script>
+    <script>
+        $(function(){
+            $('.link .button').hover(function(){
+                var title = $(this).attr('data');
+                $('.tip em').text(title);   
+                var p = $(this).offset().left;
+                var q = parseInt($('.tip').outerWidth()-$(this).outerWidth())/2;
+                var l = p-q;
+                $(".tip").css({'left': l+'px'}).animate({'top':200,'opacity':1},300);},
+
+                function(){
+                    if(!$('.tip').is(':animated')){
+                            $('.tip').animate({'top':160,'opacity':0},30);
+                    }
+                }
+            )
+        });
+    </script>
+
+
+
+</head>
+<body>
+    
+</body>
+    <div class="box">
+        <div class="link">
+            <span class="icon"></span>
+            <a href="#" class="button" data="my mission is clear">
+                <span class="line line-top"></span>
+                <span class="line line-right"></span>
+                <span class="line line-bottom"></span>
+                <span class="line line-left"></span>
+                MISSION
+            </a>
+        </div>
+
+        <div class="link">
+            <span class="icon"></span>
+            <a href="#" class="button" data="This is my playground">
+                <span class="line line-top"></span>
+                <span class="line line-right"></span>
+                <span class="line line-bottom"></span>
+                <span class="line line-left"></span>
+                PLAY
+            </a>
+        </div>
+        <div class="tip">
+            <em></em><span></span>
+        </div>
+    </div>
+</html>

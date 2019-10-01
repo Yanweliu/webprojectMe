@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VihicleNavigation(车轮旋转导航)</title>
+    <!-- 用到事件监听，addEventListener(event,function,usecapture) usecapture,ture表示事件在捕获阶段执行,
+    transitionend 事件表示在 CSS 完成过渡后触发.事件监听可以多次绑定在一个事件上而onload不会 -->
+
+
+
+    <style>
+        body {
+            background: #f9f9f9;
+        }
+
+        #menu {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        #list {
+            width: 45px;
+            height: 45px;
+            position: relative;
+            margin: 4px;
+        }
+
+        #list img {
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: all 0.5s ease-in-out;
+        }
+
+        #home {
+            width: 50px;
+            height: 50px;
+            background: url("MenuImg/Vihicle_home.png")no-repeat;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: 1s;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var hom = document.getElementById("home");
+            var imgs = document.getElementById("list").getElementsByTagName("img");
+
+            var flag = true;
+            var radius = 150;
+
+            // 第一个效果实现点击hom。hom车轮旋转，list图片旋转飞出排布好。用到math.round和math.sin和cos方法
+            //    让每个图片所在位置平均分配90度，即把三角函数的对边当left，底边当top
+
+            function Tolt(r, deg) {
+                return {
+                    L: Math.round(Math.sin(deg / 180 * Math.PI) * r),
+                    T: Math.round(Math.cos(deg / 180 * Math.PI) * r)
+                }
+            }
+
+            hom.onclick = function(){
+                if (flag) {
+                    this.style.WebkitTransform = "rotate(-720deg)";
+                    for (var i = 0; i < imgs.length; i++) {
+                        var LT = Tolt(radius, 90 / 4 * i);
+                        imgs[i].style.transition = 0.3 + i * 0.1 + "s";
+                        imgs[i].style.left = -LT.L + "px";
+                        imgs[i].style.top = -LT.T + "px";
+                        imgs[i].style.WebkitTransform = "rotate(-720deg)";
+                    } }else {
+                        this.style.WebkitTransform = "rotate(720deg)";
+                        for (var i = 0; i < imgs.length; i++) {
+                            imgs[i].style.transition = 0.3 + (imgs.length - 1) * 0.1 + "s";
+                            imgs[i].style.left = 0 + "px";
+                            imgs[i].style.top = 0 + "px";
+                            imgs[i].style.WebkitTransform = "rotate(720deg)";
+                        }
+                    }
+                    flag = !flag;
+                }
+
+
+                // 第二个效果：点击图片，瞬间放大之后自动缩小
+                for(var i = 0;i<imgs.length;i++){
+                    imgs[i].onclick = function(){
+                        this.style.transition  = "0.3s";
+                        this.style.transform =  "scale(2)";
+                        this.style.opacity = "0";
+                        //要想等到效果消失后再回复，要用另一个函数，这个函数上有tansitioned事件
+                        addeven(this,end);
+                    }
+                }
+
+                function end(){
+                        this.style.transition  = "0.3s";
+                        this.style.transform =  "scale(1)";
+                        this.style.opacity = "1";
+                        romove(this,end);
+                }
+
+
+
+            function addeven(obj,fn){
+                // obj.addEventListener('WebkitTransitionEnd',fn,false); 并不起作用，要查看一下兼容问题
+                // Chrome 36 与 WebKit 7.0.6 上请使用标准事件 transitionend.，就是浏览器更加遵守标准了
+                obj.addEventListener('transitionend',fn,false);
+            }
+
+            function romove(obj,fn){
+                // obj.removeEventListener('WebkitTransitionEnd',fn,false);
+                obj.removeEventListener('transitioend',fn,false);
+            }
+
+            }
+
+
+
+        
+    </script>
+</head>
+
+
+
+<body>
+    <div id="menu">
+        <div id="list">
+            <img src="MenuImg/Vihicle_clos.png" />
+            <img src="MenuImg/Vihicle_full.png" />
+            <img src="MenuImg/Vihicle_open.png" />
+            <img src="MenuImg/Vihicle_prev.png" />
+            <img src="MenuImg/Vihicle_refresh.png" />
+        </div>
+        <div id="home"></div>
+    </div>
+</body>
+
+</html>

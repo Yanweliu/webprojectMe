@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RainLight(霓虹灯)</title>
+    <style>
+        .btn{
+            height: 40px;width: 150px;line-height: 40px;
+            font-size: 20px;
+            margin: 100px auto;text-align: center;
+            /* background:  linear-gradient(to bottom,skyblue,rgb(107, 230, 189)); */
+            border-radius: 5px;border: #21A1D0 2px;
+            box-shadow: 0px 3px 30px rgb(115, 226, 183);
+            animation: loading 3000ms    ease-in-out infinite alternate;
+            /* 傻逼，3000ms 不是 3000s啊 */
+            background:-webkit-gradient(linear,left top,right bottom,from(#6CC3FE),to(#21A1D0));
+
+        }
+            @keyframes loading{
+                0%{opacity: 0.3;box-shadow:0px 1px 2px gray;}
+                100%{opacity: 1;box-shadow:0px 1px 30px rgb(86, 183, 221);}
+            }
+    </style>
+</head>
+
+
+<body>
+    <div class="btn">loading....</div>
+</body>
+</html>

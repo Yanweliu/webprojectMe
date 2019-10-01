@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RotateMenu(旋转菜单)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav {
+            list-style: none;
+            width: 606px;
+            position: relative;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .nav ul li {
+            list-style: none;
+            border-top: rgb(112, 112, 111) 1px solid;
+            height: 40px;
+        }
+
+        .nav li {
+            position: relative;
+            float: left;
+            width: 120px;
+            background: rgba(100, 148, 237, 0.76);
+            line-height: 40px;
+            border-right: papayawhip 1px solid;
+        }
+
+        .nav li:last-child {
+            border-right: none;
+        }
+
+
+        .nav ul {
+            display: none;
+            position: absolute;
+            /* absolute 会将对象拖离出正常的文档流绝对定位而不考虑它周围内容的布局,
+            去掉absolute后background将直接和上面li成一个整体，旋转也是包括上面的li为中心 */
+            left: 0;
+        }
+
+
+        .nav li:hover {
+            background: rgb(131, 128, 128);
+            border-right: none;
+        }
+
+        .nav li:hover ul {
+            display: block;
+            animation: animate 0.3s ease;
+            transform-origin: 50% 50%;
+        }
+
+        a {
+            text-decoration: none;
+            color: rgb(240, 239, 235);
+        }
+
+        @keyframes animate {
+            from {
+                opacity: 0;
+                transform: rotate(0deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="nav">
+        <li>
+            <a href="#">前端</a>
+            <ul>
+                <li><a href="#">html</a></li>
+                <li><a href="#">css</a></li>
+                <li><a href="#">javascript</a></li>
+            </ul>
+        </li>
+        <li><a href="#">手机</a></li>
+        <li><a href="#">相机</a></li>
+        <li><a href="#">电视机</a></li>
+        <li><a href="#">手机</a></li>
+    </ul>
+</body>
+
+</html>

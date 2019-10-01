@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GradientChange(渐变栏切换图片)</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        #main{width: 948px;height: 260px;position: relative;border: rgb(143, 139, 139) 3px;margin: 30px auto;}
+        #main .tabs{display: none;}
+        #main input.tabs + label div{height: 90px;width: 300px;position: absolute;background: rgb(138, 132, 132);opacity: 0.7;}
+        input.tabs + label dl{padding: 11px 10px;}
+        input.tabs + label dl dt{float: left;width: 60px;height: 60px;}
+        input.tabs + label dl dd.title{font-size: 16px;color: honeydew;}
+        input.tabs + label dl dd{font-size: 15px;color: honeydew;line-height: 21px;}
+
+        /* 给侧边栏设置渐变效果 */
+        input.tabs:checked + label dl{background:  linear-gradient(to bottom right, rgb(6, 134, 238) , rgb(11, 11, 68));}
+
+        /* 添加切换的动画 */
+        /* block是块元素,这个你知道吧,还有,块元素的特点你知道吧?块元素是独占一行的,没空隙正是它的这个特点决定的. */
+        .tp{height: 0px;transition:height 0.5s ease;display: block;}
+        #main input#tab1:checked ~ #img1{height: 260px;}
+        #main input#tab2:checked ~ #img2{height: 260px;}
+        #main input#tab3:checked ~ #img3{height: 260px;}
+
+
+/* 注意，对于下面这种标签加类的选择器必须不要有空格，否则既不是标签，也不是类 */
+        input.tabs + label .b1{top: 0px;right: 0px;}
+        input.tabs + label .b2{top: 85px;right: 0px;}
+        input.tabs + label .b3{top: 170px;right: 0px;}
+    </style>
+</head>
+
+
+
+<body>
+    <div id="main">
+
+        <input type="radio" name="tab" class="tabs" id="tab1"  checked>
+        <label for="tab1" >
+            <div class="b1" >
+                <dl id="dl1">
+                    <dt><img src="img/GradientA .png"></dt>
+                    <dd class="title">这是dd设置的标题</dd>
+                    <dd >通过dd的class来给dd实现dt效果</dd>
+                </dl>
+            </div>
+        </label>
+
+        
+        <input type="radio" name="tab" class="tabs" id="tab2">
+        <label for="tab2">
+            <div class="b2">
+                <dl id="dl2">
+                    <dt><img src="img/GradientB.png" style="width: 48px; height: 48px;"></dt>
+                    <dd class="title">这是dd2的标题</dd>
+                    <dd >通过dd的class来给dd实现dt效果</dd>
+                </dl>
+            </div>
+        </label>
+
+        <input type="radio" name="tab" class="tabs" id="tab3">
+        <label for="tab3">
+            <div class="b3">
+                <dl id="dl3">
+                    <dt><img src="img/GradientC.png"></dt>
+                    <dd class="title">这是dd3的标题</dd>
+                    <dd>大家按方法xccxcxccd实现dt效果xcxc </dd>
+                </dl>
+            </div>
+        </label>
+
+        <img src="img/Gradient_a.png" class="tp" id="img1">
+        <img src="img/Gradient_b.png" class="tp" id="img2">
+        <img src="img/Gradient_c.png" class="tp" id="img3">
+    </div>
+</body>
+</html>
