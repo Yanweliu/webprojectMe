@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3DChangeImg</title>
+
+    <style>
+        *{
+            margin: 0; 
+            padding: 0;
+        }
+
+        .box{
+            position: relative;
+            margin-top: 20px;
+            width: 100%;
+            height: 400px;
+        }
+        .list{
+            width: 1200px;
+            height: 400px;
+            overflow: hidden;
+            position: absolute;
+            left: 50%;
+            margin-left: -600px;
+        }
+        .btn{
+            position: absolute;
+            width: 60px;
+            height: 120px;
+            top: 50%;
+            margin-top: -50px;
+            font-size: 30px;
+            color: black;
+            background: rgb(89, 89, 223);
+            text-decoration: none;
+            line-height: 120px;
+            text-align: center;
+        }
+        .nex{
+            right: 0;
+        }
+        li{
+            position: absolute;
+            top: 50px;
+            left: 0;
+            list-style: none;
+            transition: all 0.5s ease-out;
+            opacity: 0; 
+            /* 设置opacity为0, 即li便签所有图片透明，而p2 p3 p4 设置为半透明，就是最前面的三个为隔板，
+            阻拦了后面的图片，被hidden的部分不会重叠显示，这也是为什么专门给p2，p3，p4设置opacity的原因 */
+            
+        }
+        img{
+            width: 752px;
+            height: 300px;
+            float: left;
+            border: 0;
+        }
+        .p1{
+            transform: translate3d(-224px,0,0) scale(0.8);
+        }
+        .p2{
+            transform: translate3d(0px,0,0) scale(0.8);
+            z-index: 2;
+            opacity: 0.9;
+            transform-origin: 0 50%; 
+        }
+        .p3{
+            transform: translate3d(224px,0,0) scale(1);
+            z-index: 3;
+            opacity: 1;
+        }
+        .p4{
+            transform: translate3d(448px,0,0) scale(0.8);
+            z-index: 2;
+            opacity: 0.9;
+            transform-origin: 100% 50%;
+        }
+        .p5{
+            transform: translate3d(672px,0,0) scale(0.8);
+        }
+        .p6{
+            transform: translate3d(896px,0,0) scale(0.8);
+        }
+        .p7{
+            transform: translate3d(1120px,0,0) scale(0.8);
+        }
+        .buttons{
+            position:absolute;
+            height: 40px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            margin-bottom: -32px;
+            bottom: 0;
+        }
+        .buttons a{
+            display: inline-block;
+            height: 5px;
+            width: 35px;
+            cursor: pointer;
+            padding-top: 5px;
+        }
+        span{
+            display: block;
+            height: 1px;
+            width: 35px;
+            background: rgb(8, 104, 128);
+        }
+        .black{
+            background: rgb(228, 12, 12);
+        }
+    </style>
+</head>
+
+
+
+
+
+
+
+<body>
+    <div class="box">
+        <div class="list">
+            <ul>
+                <li class="p7"><a href="javascript:;"><img src="./img/1.png"></a></li>
+                <li class="p6"><a href="javascript:;"><img src="./img/2.png"></a></li >
+                <li class="p5"><a href="javascript:;"><img src="./img/3.png"></a></li >
+                <li class="p4"><a href="javascript:;"><img src="./img/44.jpg"></a></li >
+                <li class="p3"><a href="javascript:;"><img src="./img/55.jpg"></a></li >
+                <li class="p2"><a href="javascript:;"><img src="./img/66.jpg"></a></li >
+                <li class="p1"><a href="javascript:;"><img src="./img/77.jpg"></a></li >
+            </ul>
+        </div>
+
+        <a href="javascript:;" class="pre btn"><</a>
+        <a href="javascript:;" class="nex btn">></a>
+
+        <div class="buttons">
+            <a href="javascript:;"><span class="black"></span></a>
+            <a href="javascript:;"><span></span></a>
+            <a href="javascript:;"><span></span></a>
+            <a href="javascript:;"><span></span></a>
+            <a href="javascript:;"><span></span></a>
+            <a href="javascript:;"><span></span></a>
+            <a href="javascript:;"><span></span></a>
+        </div>
+
+        <script type="text/javascript" src = "jquery\jQuery-1.8.3.js"></script>
+        <script type="text/javascript" >
+            var a = $(".buttons a");
+            var span = $(".buttons span");
+            var arr = ["p7","p6","p5","p4","p3","p2","p1"];
+            var index = 0;
+
+            $(".pre").click(function(){
+                preimg();
+            })
+
+            $(".nex").click(function(){
+                neximg();
+            })
+// unshift（）在数组最前方插入，pop（）在数组最后方删除
+//primg（）方法，即是改变数组排列 图片已经排版好了，通过class定义动画内容，给同一个动画添加不同的类就是改变了
+//效果，图片上的类变了，而不是图片换了，如img.1原先class是p1，改成p7，就算是显示上一张图片了
+            /* 口 口  口  口 口 口 口
+               p7 p6  p5 p4 p3 p2 p1
+               pre后
+               p1 p7 p6  p5 p4 p3 p2 */
+            function preimg(){
+                arr.unshift(arr[6]);
+                arr.pop();
+                $("li").each(function(i,e){
+                    $(e).removeClass().addClass(arr[i]);
+                });
+                index--;
+                if(index < 0){
+                    index = 6;
+                }
+                show(); //改变下标横线颜色的方法
+            }
+
+            function neximg(){
+                arr.push(arr[0]);
+                arr.shift();
+                $('li').each(function(i,e){
+                    $(e).removeClass().addClass(arr[i]);
+                });
+                index++;
+                if(index > 6){
+                    index = 0;
+                }
+                show();
+            }
+
+            //给p2 p4 类设置点击切换图片的方法，点p2 切p3，同理
+            /* $(".p2").click(function(){
+                preimg();
+            });  
+            1.这种注释alt+shift+a 2.给动态的对象或者改变后的数组元素添加click事件，用on（click），click（）失效 */
+            $(document).on("click",".p2",function(){
+                preimg();
+                return false;
+            })
+
+            $(document).on("click",".p4",function(){
+                neximg();
+                return false;
+            })
+
+            /* 开始定义快速切换图片功能，使用splice（）方法，为什么用它，因为他有定向切除功能，
+            如果想从图1切到图2，即跨一张图，nexprv ,只需arr前面减掉一个，后面添上一个，造成向前顺延一个class
+            但如果从图1切到图4，就是跨三张图，就要arr前面减掉三个，后面添上三个class，顺延三位，让此时的元素获得后三个的那个元素的
+            class，用splice合适，从0，去掉差值个元素，
+            已知p3 类再在定义时已经index设置为0，将p3对应的blue设置给第一个span标签
+            但是splice（0，b）是从数列arr自己的index = 0的属性开始切的，是p7 p6 p5 p4 p3 p2 p1 的p7 开始，不是index=0 的p3 开始，不一样 */
+            $(a).each(function(){
+                $(this).click(function(){
+                var myindex = $(this).index();
+                var b  = myindex- index;
+               
+                if(b==0){
+                    return
+                }
+                else if(b>0){
+                    // console.log(arr);
+                    var arr2 = arr.splice(0,b);
+                    arr = $.merge(arr,arr2);
+                    console.log(arr);
+                    $("li").each(function(i,e){
+                        $(e).removeClass().addClass(arr[i]);
+                    })
+                    index = myindex;
+                    show();
+                }else if(b<0){
+                    arr.reverse();
+                    var arr3 = arr.splice(0,-b);
+                    arr = $.merge(arr,arr3);//此时效果和向后切一样，还是把一个或者几个class向后挪，挪一个就是p3向前挪一个，
+                  //  p4享受p3 的效果，应把p3向后挪，但是如果splice后再revese不对比如 p7 p6 p5 p4 p3 p2 p1    splice  6543217 
+                    //revese 7123456, p3没变， 要先revese 1234567 再splice 2345671 再revese 1765432 ，很难想记住吧
+                  //
+                    arr.reverse();
+                  $("li").each(function(i,e){
+                      $(e).removeClass().addClass(arr[i]);
+                  })
+                  index = myindex;
+                  show();
+                }
+
+            }
+            )
+        })
+        
+          function show(){
+              $(span).eq(index).addClass('black').parent().siblings().children().removeClass('black');
+          }
+
+          /* 设置定时器 */
+          $(".box").mouseleave(function(){
+              timer = setInterval(neximg,3000);
+          })
+
+          $('.box').mouseover(function(){
+              clearInterval(timer);
+          })
+
+          timer = setInterval(neximg,3000);//timer 是个参数可以传给cleaninterval
+        </script> 
+        
+
+    </div>
+</body>
+</html>
