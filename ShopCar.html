@@ -61,7 +61,7 @@
 
                var Bookname =  ev.dataTransfer.getData('title');
                var Bookprice = ev.dataTransfer.getData('money');
-
+            // 对象中有此书名，true，不进来。 flag不能实现此功能
                 if(!obj[Bookname]){
                     var newP = document.createElement('p');
                     var newspan = document.createElement('span');
