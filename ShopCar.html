@@ -35,7 +35,7 @@
         window.onload  = function(){
             var ObjLi = document.getElementsByTagName('li');
             var Sum = document.getElementById('addAll');
-            var flag = false;
+            var obj = {};
 
             var Sum = null;
             var contempory = 0;
@@ -62,9 +62,7 @@
                var Bookname =  ev.dataTransfer.getData('title');
                var Bookprice = ev.dataTransfer.getData('money');
 
-                if(!flag){//这样写错误，一次完成后，flag就变为true，此后所有书名都不会添加
-                // master主支上用对象存储，每次新进来的书都会添加属性对，没进来的书没有属性就是flase，再！一下，进来
-                // 相当于一个书库，有了不进来，没有进来录入信息，下次不需要
+                if(!obj[Bookname]){
                     var newP = document.createElement('p');
                     var newspan = document.createElement('span');
                     newspan.className = 'box1';
@@ -82,7 +80,7 @@
                     newP.appendChild(newspan);
 
                     addAll.appendChild(newP);
-                    flag = true;
+                    obj[Bookname] = 1;
 
                 }
                 else{
