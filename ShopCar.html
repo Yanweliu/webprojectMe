@@ -17,12 +17,127 @@
     <!-- fuck you xixi 主干先搞懂再说 -->
     <!-- 好难 -->
     <!-- 你好毒 -->
-    <!-- 再看看吃饭去 -->
+    <!-- 再看看吃饭去,吃饭回来了，一直在看ondragstart和ondragover以及ondrop事件,上午勉强把git入门，以后vscode
+         写代码pull push 远程同步美滋滋,开始正儿八经写购物车托拽demo -->
+    <style>
+        *{margin: 0;padding: 0;}
+        li{list-style: none; float: left;width: 210px;height:175px;margin: 10px;}
+        img {width: 100px;height: 100px;display:block;margin: 0 auto;}
+        li p{text-align: center;margin-top: 8px;font-size: 15px;}
+        li p:nth-child(2){border-bottom: darkgrey 2px dashed;}
+        #addAll{width: 900px;height: 300px;border: darkgray 3px solid;clear: both;}
+        .box1{width: 300px;float: left;}
+        .box2{width: 300px;float: left;}
+        .box3{width: 300px;float: left;}
+        #Sum{float: right;}
+    </style>
+    <script>
+        window.onload  = function(){
+            var ObjLi = document.getElementsByTagName('li');
+            var Sum = document.getElementById('addAll');
+            var flag = false;
+
+            var Sum = null;
+            var contempory = 0;
+
+            for(var i = 0;i<ObjLi.length;i++){
+
+                ObjLi[i].ondragstart = function(ev){
+
+                var op = this.getElementsByTagName('p');
+
+                    ev.dataTransfer.setData('title',op[0].innerHTML);
+                    ev.dataTransfer.setData('money',op[1].innerHTML);
+                    
+                };
+            }
+
+            addAll.ondragover = function(ev){
+                ev.preventDefault();
+            };
+
+            addAll.ondrop = function(ev){
+                ev.preventDefault();
+
+               var Bookname =  ev.dataTransfer.getData('title');
+               var Bookprice = ev.dataTransfer.getData('money');
+
+                if(!flag){//这样写错误，一次完成后，flag就变为true，此后所有书名都不会添加
+                // master主支上用对象存储，每次新进来的书都会添加属性对，没进来的书没有属性就是flase，再！一下，进来
+                // 相当于一个书库，有了不进来，没有进来录入信息，下次不需要
+                    var newP = document.createElement('p');
+                    var newspan = document.createElement('span');
+                    newspan.className = 'box1';
+                    newspan.innerHTML = 1;
+                    newP.appendChild(newspan);
+
+                    var newspan = document.createElement('span');
+                    newspan.className = 'box2';
+                    newspan.innerHTML = Bookname;
+                    newP.appendChild(newspan);
+
+                    var newspan = document.createElement('span');
+                    newspan.className = 'box3';
+                    newspan.innerHTML = Bookprice;
+                    newP.appendChild(newspan);
+
+                    addAll.appendChild(newP);
+                    flag = true;
+
+                }
+                else{
+                    var box1 = document.getElementsByClassName('box1');
+                    var box2 = document.getElementsByClassName('box2');
+
+                    for(var i = 0;i<box2.length;i++){
+                        if(box2[i] == Bookname){
+                            box1[i].innerHTML =parseInt( box1[i].innerHTML) + 1;
+                        }
+                    }
+
+                }
+
+                if(!Sum){
+                    Sum = document.createElement('div');
+                    Sum.id = "Sum";
+                }
+                contempory += parseInt(Bookprice);
+                // 单按照￥50的样式写，直接导致这一步box3显示nan，所以把html中的单价格式改为50￥
+                Sum.innerHTML = contempory + "￥";
+                addAll.appendChild(Sum);
+
+            }
+
+
+        }
+    </script>         
 </head>
 
 
 <body>
-    
+    <ul>
+        <li draggable="true">
+            <img src="img/albumSmall1.jpg"/>
+            <p>JavaScript语言精粹</p>
+            <p>40￥</p>
+        </li>
+        <li draggable="true">
+            <img src="img/ButtonSwitch1.jpg"/>
+            <p>javascript权威指南</p>
+            <p>120￥</p>
+        </li>
+        <li draggable="true">
+            <img src="img/ButtonSwitch2.jpg"/>
+            <p>精通JavaScript语言</p>
+            <p>50￥</p>
+        </li>
+        <li draggable="true">
+            <img src="img/ButtonSwitch2.jpg"/>
+            <p>Dom编程艺术</p>
+            <p>50￥</p>
+        </li>
+    </ul>
+    <div id="addAll"></div>
     
 </body>
 </html>
