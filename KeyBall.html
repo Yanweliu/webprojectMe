@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KeyBall(键盘操纵小球)</title>
+    <style>
+        body{background: azure}
+        #box{height: 50px;width: 50px;border-radius: 50%;background: black;position: absolute;
+             border: solid black 1px;}
+    </style>
+    <script>
+        window.onload = function(){
+            var box = document.getElementById('box');
+            var clientH = document.documentElement.clientHeight||document.body.clientHeight;
+            var clientW = document.documentElement.clientWidth||document.body.clientWidth;
+            var timer = null;
+
+            window.onkeydown = function(ev){
+                var ev = ev||event;
+                // clearInterval(timer);
+                // 如果每次触发事件后都不删除，会一点一点累积造成小球晃动却无法移动
+                timer = setInterval(
+                    function(){
+                        switch(ev.keyCode){
+                            case 37:
+                            if(box.offsetLeft>0){box.style.left = box.offsetLeft - 10 +"px";}break;
+                            case 38:
+                            if(box.offsetTop>0){box.style.top = box.offsetTop - 10 +"px";}break;
+                            case 39:
+                            if(box.offsetLeft<clientW - box.offsetWidth){box.style.left = box.offsetLeft + 10 +"px";}break;
+                            case 40:
+                            if(box.offsetTop<clientH - box.offsetHeight){box.style.top = box.offsetTop + 10+"px";}break;
+                        }
+                    }
+               ,10 );
+               //设置的计时器周期影响速度，按下键盘的时间几乎一样，但计时器周期短的执行的次数多，移动的就多
+            }
+
+               document.onkeyup = function(){
+                   clearInterval(timer);
+               }
+               //如果没在onkeyup上定义清除函数，会导致按下松手后继续移动
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="box"></div>
+</body>
+</html>
