@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chorme">
+    <title>DrawerPic(抽屉展示图片)</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        div{width: 250px;margin: 0 auto;}
+        ul{list-style: none;}
+        a{font-size: 15px;text-decoration: none;color: rgb(247, 240, 240);}
+        li{height: 40px;line-height: 40px;width: 150px;text-align: center;background: rgb(158, 182, 228);
+           border-bottom: darkgray dashed 2px;transition: height 0.4s ease;overflow: hidden;margin: 1px auto;}
+        li img{width: 150px;height: 150px;} 
+        #list li a:hover{color: aliceblue;}  
+         /*增加一个，默认是摊开第一个图片，用nth-child（）  */
+        #list li:nth-child(1){height: 200px;}
+        /* 设置完成后弹不上去了，定义如下，鼠标hover在list就会收回，hover再li再次摊开，顺序不能搞错，否则bug */
+        #list:hover li{height: 40px;}
+        #list li:hover{height: 200px;background: darkgrey}  
+    </style>
+</head>
+
+<body>
+    <div>
+        <ul id = "list">
+            <li>
+                <a href="javascript:void(0);">超级牛皮的图片</a>
+                <img src="img/GradientA .png"/>
+            </li>
+            <li>
+                <a href="javascript:void(0);">超级牛皮的图片</a>
+                <img src="img/GradientA .png"/>
+            </li>
+            <li>
+                <a href="javascript:void(0);">超级牛皮的图片</a>
+                <img src="img/GradientA .png"/>
+            </li>
+            <li>
+                <a href="javascript:void(0);">超级牛皮的图片</a>
+                <img src="img/GradientA .png"/>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
