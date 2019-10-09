@@ -32,6 +32,7 @@
                 lis += "<li></li>";
                 // 注意: innerHTML写的是字符串，要加上引号，但是数值要用+连接
                 addcss.innerHTML += "#lists li:nth-of-type("   +(i+1)+     "){transform:rotate("   +i*6+    "deg);}"
+        //    style 标签的id是addcss ，直接向style中写html第一次遇到很强
             }
 
             lists.innerHTML = lis;
